@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import type { Pelicula } from "./types/Pelicula";
 import type { Favorito } from "./types/Favorito";
 import { obtenerPeliculas } from "./services/api";
-import { ElementoCard } from "./components/ElementoCard";
+
+// Importación de nuestros 4 componentes personalizados obligatorios
+import { Buscador } from "./components/Buscador";
 import { Favoritos } from "./components/Favoritos";
+import { ListaElementos } from "./components/ListaElementos";
 
 function App() {
   // 1. Estados principales de la API y UI
@@ -44,9 +47,8 @@ function App() {
     localStorage.setItem("misFavoritos", JSON.stringify(favoritos));
   }, [favoritos]);
 
-  // 5. Funciones CRUD para la colección local[cite: 1]
+  // 5. Funciones CRUD para la colección local
   const agregarFavorito = (pelicula: Pelicula) => {
-    // Evita duplicados validando si la película ya existe en la lista[cite: 1]
     if (!favoritos.find((f) => f.id === pelicula.id)) {
       setFavoritos([...favoritos, { ...pelicula, nota: "" }]);
     } else {
@@ -69,26 +71,15 @@ function App() {
     pelicula.title.toLowerCase().includes(busqueda.toLowerCase())
   );
 
-  // 7. Renderizado
+  // 7. Renderizado utilizando la separación de responsabilidades
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1200px", margin: "0 auto" }}>
       <h1>🎬 Explorador de Películas de Studio Ghibli</h1>
 
-      <input
-        type="text"
-        placeholder="Buscar película por título..."
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-        style={{
-          padding: "10px",
-          marginBottom: "20px",
-          width: "100%",
-          maxWidth: "300px",
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-        }}
-      />
+      {/* Componente 1: Buscador */}
+      <Buscador busqueda={busqueda} setBusqueda={setBusqueda} />
 
+      {/* Manejo de estados de la API */}
       {cargando && <p>Cargando la magia de Ghibli...</p>}
 
       {error && (
@@ -98,11 +89,7 @@ function App() {
         </div>
       )}
 
-      {!cargando && !error && peliculasFiltradas.length === 0 && (
-        <p>No se encontraron películas con ese nombre.</p>
-      )}
-
-      {/* Sección de la Colección (Favoritos) */}
+      {/* Componente 2: Favoritos */}
       <Favoritos 
         favoritos={favoritos} 
         onEliminar={eliminarFavorito} 
@@ -112,15 +99,14 @@ function App() {
       <hr style={{ margin: "40px 0" }} />
 
       <h2>Catálogo de Películas</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "20px" }}>
-        {peliculasFiltradas.map((pelicula) => (
-          <ElementoCard 
-            key={pelicula.id} 
-            pelicula={pelicula} 
-            onAgregar={() => agregarFavorito(pelicula)} 
-          />
-        ))}
-      </div>
+      
+      {/* Componente 3: Lista de Elementos (que a su vez renderiza el Componente 4: ElementoCard) */}
+      {!cargando && !error && (
+        <ListaElementos 
+          peliculas={peliculasFiltradas} 
+          onAgregar={agregarFavorito} 
+        />
+      )}
     </div>
   );
 }
