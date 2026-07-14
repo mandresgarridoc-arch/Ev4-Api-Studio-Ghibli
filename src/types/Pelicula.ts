@@ -4,4 +4,5 @@ export interface Pelicula {
   image: string;
   director: string;
   release_date: string;
+  description: string; 
 }
