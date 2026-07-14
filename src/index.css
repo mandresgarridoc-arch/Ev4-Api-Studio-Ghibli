@@ -109,3 +109,63 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Efecto para las tarjetas de películas y favoritos */
+.tarjeta-animada {
+  transition: all 0.3s ease;
+}
+.tarjeta-animada:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+}
+
+/* Animación suave al expandir el texto */
+.fade-in {
+  animation: aparecerSuave 0.4s ease-in-out forwards;
+}
+@keyframes aparecerSuave {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botones estéticos con sombras */
+.btn-estetico {
+  transition: all 0.2s ease;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-guardar {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+}
+.btn-guardar:hover {
+  background-color: #45a049;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-eliminar {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 8px 15px;
+}
+.btn-eliminar:hover {
+  background-color: #d9363e;
+  box-shadow: 0 4px 10px rgba(255, 77, 79, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Buscador e Inputs con brillo al hacer clic */
+.input-estetico {
+  transition: all 0.3s ease;
+  border: 1px solid #ccc;
+}
+.input-estetico:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+}

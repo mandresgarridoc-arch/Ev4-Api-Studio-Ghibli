@@ -6,17 +6,17 @@ interface Props {
 export const Buscador = ({ busqueda, setBusqueda }: Props) => {
   return (
     <input
+      className="input-estetico"
       type="text"
-      placeholder="Buscar película por título..."
+      placeholder="🔍 Buscar película por título..."
       value={busqueda}
       onChange={(e) => setBusqueda(e.target.value)}
       style={{
-        padding: "10px",
-        marginBottom: "20px",
+        padding: "12px 15px",
+        marginBottom: "30px",
         width: "100%",
-        maxWidth: "300px",
-        borderRadius: "4px",
-        border: "1px solid #ccc",
+        maxWidth: "400px",
+        borderRadius: "8px",
       }}
     />
   );
